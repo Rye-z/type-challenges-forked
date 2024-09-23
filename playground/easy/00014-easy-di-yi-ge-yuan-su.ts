@@ -22,7 +22,8 @@
 
 /* _____________ 你的代码 _____________ */
 
-type First<T extends any[]> = any
+// 1. [infer FirstItem, ...any[]] => 解构，infer FirstItem 表示数组第一个元素
+type First<T extends any[]> = T extends [infer FirstItem, ...any[]] ? FirstItem : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

@@ -30,8 +30,11 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type MyPick<T, K> = any
+// keyof 是一个单目运算符，接受一个对象类型作为参数，返回该对象的所有键名组成的联合类型。
+// [in 运算符](https://wangdoc.com/typescript/operator#in-%E8%BF%90%E7%AE%97%E7%AC%A6)
+type MyPick<T extends object, K extends keyof T> = {
+  [P in K]: T[P]
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

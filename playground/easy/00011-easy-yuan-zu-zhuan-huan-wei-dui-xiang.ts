@@ -19,8 +19,9 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type TupleToObject<T extends readonly any[]> = any
+type TupleToObject<T extends readonly any[]> = {
+  [P in T[number]]: P
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -31,6 +32,20 @@ const sym1 = Symbol(1)
 const sym2 = Symbol(2)
 const tupleSymbol = [sym1, sym2] as const
 const tupleMix = [1, '2', 3, '4', sym1] as const
+
+type a = typeof tuple
+// a[number] => 方括号是去除对象属性对应的类型，对于数组取值就相当于通过索引取对象的值
+type b = a[number]
+// => 类似于
+// as const => 相当于对每个属性添加 readonly
+const tupleMap = {
+  0: 'tesla',
+  1: 'model3',
+} as const
+
+// => 因为 object 的 key 的类型可以是 symbol、string、number，但是数组只有
+type c = typeof tupleMap
+type d = c[keyof typeof tupleMap]
 
 type cases = [
   Expect<Equal<TupleToObject<typeof tuple>, { 'tesla': 'tesla', 'model 3': 'model 3', 'model X': 'model X', 'model Y': 'model Y' }>>,

@@ -18,7 +18,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Concat<T, U> = any
+// const tuple = [1] as const 让数组有了 readonly 的特性
+// 1. 方案1 就是声明的时候让数组保持 readonly 的特性
+// type Concat<T extends readonly any[], U extends readonly any[]> = [...T, ...U]
+// 如果希望拼接后的数组不含有 readonly 的特性
+type Mutable<T extends readonly any[]> = T extends readonly [...infer E] ? E : never
+type Concat<T extends readonly any[], U extends readonly any[]> = [...Mutable<T>, ...Mutable<U>]
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

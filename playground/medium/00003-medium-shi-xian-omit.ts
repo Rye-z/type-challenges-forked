@@ -30,7 +30,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type MyOmit<T, K> = any
+// in => 用来取出联合类型的所有成员
+type MyOmit<T extends object, K extends keyof T> = {
+  // (P in keyof T as P) extends K ? never : P
+  [P in keyof T as P extends K ? never : P]: T[P]
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
