@@ -19,12 +19,16 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type Without<T, U> = any
+type ToUnion<T> = T extends any[] ? T[number] : T
+type Without<T extends any[], U extends any[] | number> =
+     T extends [infer F, ...infer R]
+       ? F extends ToUnion<U> ? Without<R, U> : [F, ...Without<R, U>]
+       : T
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
+type a = Without<[1, 2, 4, 1], [1, 2]>
 type cases = [
   Expect<Equal<Without<[1, 2], 1>, [2]>>,
   Expect<Equal<Without<[1, 2, 4, 1, 5], [1, 2]>, [4, 5]>>,

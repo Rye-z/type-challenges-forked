@@ -19,7 +19,10 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Absolute<T extends number | string | bigint> = any
+// @notice: `${T}` => 转为字符串
+type Absolute<
+  T extends number | string | bigint,
+> = `${T}` extends `-${infer S}` ? S : `${T}`
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

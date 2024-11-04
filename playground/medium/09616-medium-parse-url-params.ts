@@ -17,9 +17,13 @@
 */
 
 /* _____________ 你的代码 _____________ */
+type ParseUrlParams<T> = T extends `${string}:${infer R}`
+  ? R extends `${infer P}/${infer _R}`
+    ? P | ParseUrlParams<_R>
+    : R
+  : never
 
-type ParseUrlParams<T> = any
-
+type c = ParseUrlParams<'posts/:id'>
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

@@ -27,7 +27,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type RequiredByKeys<T, K> = any
+type RequiredByKeys<T extends object, K = keyof T> = Omit<{
+  [P in keyof T as P extends K ? P : never]-?: T[P]
+} & {
+  [P in keyof T as P extends K ? never : P]: T[P]
+}, never>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

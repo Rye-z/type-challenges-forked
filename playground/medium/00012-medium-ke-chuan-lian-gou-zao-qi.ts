@@ -38,10 +38,12 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+type MyOmit<T extends object, K extends keyof T> = {
+  [P in keyof T as P extends K ? never : P]: T[P]
+}
+type Chainable<R = object> = {
+  option<K extends string, V>(key: K, value: V): Chainable<Omit<R, K> & Record<K, V>>
+  get(): R
 }
 
 /* _____________ 测试用例 _____________ */
@@ -67,6 +69,7 @@ const result3 = a
   .option('name', 123)
   .get()
 
+type a = typeof result3
 type cases = [
   Expect<Alike<typeof result1, Expected1>>,
   Expect<Alike<typeof result2, Expected2>>,

@@ -15,8 +15,24 @@
 */
 
 /* _____________ 你的代码 _____________ */
+namespace t00296 {
+  type Uni = 'A' | 'B' | 'C'
 
-type Permutation<T> = any
+  type S1<U> = U extends any ? [U] : never
+  type P1 = S1<Uni>
+
+  type S2<U, C = U> = U extends any ? [U, S2<Exclude<C, U>>] : never
+  type P2 = S2<Uni>
+
+  type S3<U, C = U> = [U] extends [never] ? [] : U extends C ? [U, ...S3<Exclude<C, U>>] : never
+  type P3 = S3<Uni>
+}
+type Permutation<T, K = T> =
+    [T] extends [never]
+      ? []
+      : K extends K
+        ? [K, ...Permutation<Exclude<T, K>>]
+        : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

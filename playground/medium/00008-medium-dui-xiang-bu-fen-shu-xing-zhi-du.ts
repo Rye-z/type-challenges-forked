@@ -34,7 +34,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type MyReadonly2<T, K> = any
+// K extends keyof T => 如果没有提供 K 的类型，则获取 T 的所有类型
+type MyReadonly2<T extends object, K extends keyof T = keyof T> = {
+  readonly [P in K]: T[P]
+} & {
+  [P in keyof T as P extends K ? never : P]: T[P]
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Alike, Expect } from '@type-challenges/utils'

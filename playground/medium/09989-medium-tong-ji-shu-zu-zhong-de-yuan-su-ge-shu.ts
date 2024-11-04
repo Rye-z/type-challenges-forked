@@ -18,7 +18,7 @@
     5: 1
   }
   */
-  type Simple3 = CountElementNumberToObject<[1,2,3,4,5,[1,2,3]]>
+  type Simple3 = CountElementNumberToObject<[1, 2, 3, 4, 5, [1, 2, 3]]>
   /*
    return {
     1: 2,
@@ -27,7 +27,6 @@
     4: 1,
     5: 1
   }
-  */
   ~~~
 
   > 在 Github 上查看：https://tsch.js.org/9989/zh-CN

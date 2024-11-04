@@ -32,6 +32,7 @@
 //   But you can’t really throw in type logic. You return “never” and now the resulting type is unusable.
 type IsNever<T> = [ T ] extends [ never ] ? true : false
 
+type a = IsNever<{ name: string }['obj']>
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

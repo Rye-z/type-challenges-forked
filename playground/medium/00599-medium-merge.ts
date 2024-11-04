@@ -28,7 +28,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Merge<F, S> = any
+type Merge<F extends object, S extends object> = {
+  [P in (keyof F | keyof S)]: P extends keyof S ? S[P] : P extends keyof F ? F[P] : never
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -42,6 +44,7 @@ type Bar = {
   c: boolean
 }
 
+type a = Merge<Foo, Bar>
 type cases = [
   Expect<Equal<Merge<Foo, Bar>, {
     a: number

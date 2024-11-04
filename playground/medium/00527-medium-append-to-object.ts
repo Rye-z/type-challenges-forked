@@ -19,7 +19,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type AppendToObject<T, U, V> = any
+// @notice
+type Compute<T> = { [K in keyof T]: T[K] }
+type AppendToObject<T extends object, K extends keyof any, V> = Compute<T & {
+  [P in K]: V
+}>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

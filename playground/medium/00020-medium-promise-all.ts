@@ -23,7 +23,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-declare function PromiseAll(values: any): any
+declare function PromiseAll<T extends any[]>(values: [...T]):
+// 返回值是对象的形式，因为数组中的元素类型不固定，所以需要按照索引依次指定元素返回类型
+Promise<{ [K in keyof T]: Awaited<T[K]> }>
+
+const a = [1, 2, 3]
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

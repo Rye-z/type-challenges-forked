@@ -18,7 +18,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Shift<T> = any
+// @notice => unknown
+// [any 类型，unknown 类型，never 类型 - TypeScript 教程 - 网道](https://wangdoc.com/typescript/any)
+// 1. unknown 为了解决 any 可以赋值给任何值的问题，算是严格版的 any
+// 2. unknown 赋值给 除 any 和 unknown 以外的变量都会报错
+// 3. unknown 不能调用 unknown 类型的变量和方法属性
+type Shift<T> = T extends [unknown, ...args: infer R] ? [...R] : []
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

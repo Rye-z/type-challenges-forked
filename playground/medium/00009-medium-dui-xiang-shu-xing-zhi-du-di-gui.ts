@@ -36,11 +36,20 @@
 
 /* _____________ 你的代码 _____________ */
 
-type DeepReadonly<T> = any
+type Primary = string | number | boolean | Function
+type DeepReadonly<T> = {
+  readonly [key in keyof T]: T[key] extends Primary ? T[key] : DeepReadonly<T[key]>
+}
+
+// ### T[key] extends object 不行，因为 Function extends object 也是可以通过的，但 Function 应该也是保持原类型
+// type DeepReadonly<T> = {
+//   readonly [key in keyof T]: T[key] extends object ? DeepReadonly<T[key]> : T[key]
+// }
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
+type a = DeepReadonly<X1>
 type cases = [
   Expect<Equal<DeepReadonly<X1>, Expected1>>,
   Expect<Equal<DeepReadonly<X2>, Expected2>>,

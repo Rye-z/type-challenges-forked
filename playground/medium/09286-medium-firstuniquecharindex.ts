@@ -11,12 +11,37 @@
 */
 
 /* _____________ 你的代码 _____________ */
+// type FirstUniqueCharIndex<
+//   T extends string,
+//   U extends string[] = [],
+// > = T extends `${infer F}${infer R}`
+//   ? F extends U[number]
+//     // 如果重复，则对剩下的字符串进行处理
+//     ? FirstUniqueCharIndex<R, [...U, F]>
+//     // 如果不重复，则检查一下 F 是否在剩余的字符串中，存在则说明不唯一
+//     : R extends `${string}${F}${string}`
+//       ? FirstUniqueCharIndex<R, [...U, F]>
+//       : U['length']
+//   : -1
 
-type FirstUniqueCharIndex<T extends string> = any
+type FirstUniqueCharIndex<
+  T extends string,
+  U extends string[] = [],
+> = T extends `${infer F}${infer R}`
+  // 检查是否重复
+  ? R extends `${string}${F}${string}`
+    // 重复则检查剩下的字符串
+    ? FirstUniqueCharIndex<R, [...U, F]>
+    // 这一步是获取 F 的 index
+    : F extends U[number] ? FirstUniqueCharIndex<R, [...U, F]> : U['length']
+  : -1
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
+type a = FirstUniqueCharIndex<'aabb'>
+type B = '' extends 'bb' ? true : false
+type b = B
 type cases = [
   Expect<Equal<FirstUniqueCharIndex<'leetcode'>, 0>>,
   Expect<Equal<FirstUniqueCharIndex<'loveleetcode'>, 2>>,

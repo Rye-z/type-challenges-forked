@@ -22,8 +22,10 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type RemoveIndexSignature<T> = any
+// @notice: PropertyKey
+type RemoveIndexSignature<T, P = PropertyKey> = {
+  [K in keyof T as P extends K ? never : K extends P ? K : never]: T[K]
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

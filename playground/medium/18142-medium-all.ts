@@ -22,7 +22,15 @@
 
 /* _____________ 你的代码 _____________ */
 
-type All = any
+export type IsEqual<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false
+
+type All<T extends any[], U> = T extends [infer L, ...infer R]
+  ? IsEqual<L, U> extends true
+    ? All<R, U>
+    : false
+  : true
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

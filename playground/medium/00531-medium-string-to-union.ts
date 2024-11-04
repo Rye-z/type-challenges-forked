@@ -19,7 +19,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type StringToUnion<T extends string> = any
+type StringToUnion<
+  T extends string,
+U extends string[] = [],
+> = T extends `${infer F}${infer R}`
+  ? StringToUnion<R, [...U, F]>
+  : U[number]
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

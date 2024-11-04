@@ -15,7 +15,6 @@
 
   > 在 Github 上查看：https://tsch.js.org/119/zh-CN
 */
-
 /* _____________ 你的代码 _____________ */
 
 type ReplaceAll<S extends string, From extends string, To extends string> = any

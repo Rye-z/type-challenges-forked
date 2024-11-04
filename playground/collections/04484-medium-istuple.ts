@@ -20,6 +20,10 @@
 
 /* _____________ 你的代码 _____________ */
 
+// tuple 的长度是固定的 => tuple['length'] 是一个具体的数字
+// tuple['length'] extends number = true
+// number extends tuple['length'] = false
+
 // number is just a type (const x: number = 1).
 // To be a tuple, T['length'] needs to exact number type (1, 2, 42, etc) and not just number type.
 // Exact number extends number and number does not extends exact number but extends itself.
@@ -35,9 +39,11 @@
 // = number extends 1
 // = false
 
-type IsTuple<T> = T extends readonly any[]
-  ? number extends T['length'] ? false : true
-  : false
+type IsTuple<T> = [T] extends [never]
+  ? false
+  : T extends readonly any[]
+    ? number extends T['length'] ? false : true
+    : false
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

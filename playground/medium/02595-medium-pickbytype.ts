@@ -23,7 +23,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type PickByType<T, U> = any
+type PickByType<T extends object, U> = {
+  [P in keyof T as T[P] extends U ? P : never]: T[P]
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -34,7 +36,6 @@ interface Model {
   isReadonly: boolean
   isEnable: boolean
 }
-
 type cases = [
   Expect<Equal<PickByType<Model, boolean>, { isReadonly: boolean, isEnable: boolean }>>,
   Expect<Equal<PickByType<Model, string>, { name: string }>>,

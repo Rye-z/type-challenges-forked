@@ -17,8 +17,13 @@
 */
 
 /* _____________ 你的代码 _____________ */
-
-type ConstructTuple<L extends number> = any
+type ConstructTuple<
+  T extends number,
+  U extends any[] = [],
+> = U['length'] extends T
+  // I 是否等于 T
+  ? U
+  : ConstructTuple<T, [unknown, ...U]>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
